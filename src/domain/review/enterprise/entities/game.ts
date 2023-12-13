@@ -10,6 +10,7 @@ export interface GameProps {
   releaseDate: Date
   publisher: string
   studio: string
+  bannerUrl: string
 }
 
 export class Game extends Entity<GameProps> {
@@ -35,6 +36,10 @@ export class Game extends Entity<GameProps> {
 
   get studio() {
     return this.props.studio
+  }
+
+  get bannerUrl() {
+    return this.props.bannerUrl
   }
 
   static create(props: Optional<GameProps, 'slug'>, id?: UniqueEntityID) {
