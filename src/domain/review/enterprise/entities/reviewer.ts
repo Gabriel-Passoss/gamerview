@@ -1,17 +1,19 @@
 import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Game } from './game'
+import { Optional } from '@/core/types/optional'
 
 export interface ReviewerProps {
   name: string
   email: string
+  password: string
   nickname: string
   profileImageUrl: string
   birthday: Date
   subtitle: string
   playing: Game[]
   createdAt: Date
-  updatedAt: Date
+  updatedAt?: Date | null
 }
 
 export class Reviewer extends Entity<ReviewerProps> {
@@ -32,6 +34,15 @@ export class Reviewer extends Entity<ReviewerProps> {
   set email(email: string) {
     this.props.email = email
 
+    this.touch()
+  }
+
+  get password() {
+    return this.props.password
+  }
+
+  set password(password: string) {
+    this.props.password = password
     this.touch()
   }
 
@@ -69,12 +80,44 @@ export class Reviewer extends Entity<ReviewerProps> {
     this.touch()
   }
 
+  get playing() {
+    return this.props.playing
+  }
+
+  set playing(games: Game[]) {
+    this.props.playing = games
+    this.touch()
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt
+  }
+
+  get createdAt() {
+    return this.props.createdAt
+  }
+
   private touch() {
     this.props.updatedAt = new Date()
   }
 
-  static create(props: ReviewerProps, id?: UniqueEntityID) {
-    const reviewer = new Reviewer(props, id)
+  static create(
+    props: Optional<
+      ReviewerProps,
+      'profileImageUrl' | 'subtitle' | 'playing' | 'createdAt' | 'updatedAt'
+    >,
+    id?: UniqueEntityID,
+  ) {
+    const reviewer = new Reviewer(
+      {
+        ...props,
+        profileImageUrl: props.profileImageUrl ?? '',
+        subtitle: props.subtitle ?? '',
+        playing: props.playing ?? [],
+        createdAt: props.createdAt ?? new Date(),
+      },
+      id,
+    )
 
     return reviewer
   }
