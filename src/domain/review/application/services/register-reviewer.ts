@@ -3,6 +3,7 @@ import { ReviewerAlreadyExistsError } from './errors/reviewer-already-exists-err
 import { Reviewer } from '../../enterprise/entities/reviewer'
 import { Injectable } from '@nestjs/common'
 import { ReviewersRepository } from '../repositories/reviewers-respository'
+import { HashGenerator } from '../crypto/hash-generator'
 
 interface RegisterReviewerServiceRequest {
   name: string
@@ -21,7 +22,10 @@ type RegisterReviewerServiceResponse = Either<
 
 @Injectable()
 export class RegisterReviewerService {
-  constructor(private readonly reviewersRepository: ReviewersRepository) {}
+  constructor(
+    private readonly reviewersRepository: ReviewersRepository,
+    private readonly hashGenerator: HashGenerator,
+  ) {}
 
   async execute({
     name,
@@ -44,10 +48,12 @@ export class RegisterReviewerService {
       return left(new ReviewerAlreadyExistsError(nickname))
     }
 
+    const hashedPassword = await this.hashGenerator.hash(password)
+
     const reviewer = Reviewer.create({
       name,
       email,
-      password,
+      password: hashedPassword,
       nickname,
       birthday,
     })
