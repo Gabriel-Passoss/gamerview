@@ -43,4 +43,10 @@ export class InMemoryReviewersRepository implements ReviewersRepository {
 
     this.items[itemIndex] = reviewer
   }
+
+  async delete(reviewer: Reviewer): Promise<void> {
+    const itemIndex = this.items.findIndex((item) => item.id === reviewer.id)
+
+    this.items.splice(itemIndex, 1)
+  }
 }

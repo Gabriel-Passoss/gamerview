@@ -6,4 +6,5 @@ export abstract class ReviewersRepository {
   abstract findByEmail(email: string): Promise<Reviewer | null>
   abstract create(reviewer: Reviewer): Promise<void>
   abstract save(reviewer: Reviewer): Promise<void>
+  abstract delete(reviewer: Reviewer): Promise<void>
 }
