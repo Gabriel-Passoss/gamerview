@@ -17,7 +17,9 @@
     "test:watch": "vitest",
     "test:cov": "vitest run --coverage",
     "test:debug": "vitest --inspect-brk --inspect --logHeapUsage --threads=false",
-    "test:e2e": "vitest run --config ./vitest.config.e2e.ts"
+    "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
+    "prepare": "husky install",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -50,5 +52,18 @@
     "unplugin-swc": "^1.4.4",
     "vite-tsconfig-paths": "^4.2.2",
     "vitest": "^1.0.4"
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint"
+    ],
+    "*.ts": [
+      "npm run lint"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
