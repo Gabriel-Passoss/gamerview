@@ -4,7 +4,7 @@ import { InMemoryReviewsRepository } from 'test/repositories/in-memory-reviews-r
 let inMemoryReviewsRepository: InMemoryReviewsRepository
 let sut: CreateReviewService
 
-describe('Authenticate reviewer', () => {
+describe('Create a review', () => {
   beforeEach(() => {
     inMemoryReviewsRepository = new InMemoryReviewsRepository()
 
