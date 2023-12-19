@@ -54,9 +54,6 @@ export class EditReviewerService {
         oldPassword,
         reviewer.password,
       )
-      console.log(oldPassword)
-      console.log(reviewer.password)
-      console.log(isPasswordValid)
 
       if (!isPasswordValid) {
         return left(new WrongCredentialsError())
