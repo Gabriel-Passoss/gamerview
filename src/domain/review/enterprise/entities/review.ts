@@ -2,10 +2,12 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Slug } from './value-objects/slug'
 import { Entity } from '@/core/entities/entity'
 import { Optional } from '@/core/types/optional'
+import { Game } from './game'
 
 export interface ReviewProps {
   reviewerId: UniqueEntityID
   title: string
+  game: Game
   hoursOfGameplay: number
   isCompleted: boolean
   content: string

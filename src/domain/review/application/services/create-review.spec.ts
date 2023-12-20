@@ -1,3 +1,4 @@
+import { makeGame } from 'test/factories/game-factory'
 import { CreateReviewService } from './create-review'
 import { InMemoryReviewsRepository } from 'test/repositories/in-memory-reviews-repository'
 
@@ -15,6 +16,7 @@ describe('Create a review', () => {
     const result = await sut.execute({
       reviewerId: '1',
       title: 'New review',
+      game: makeGame(),
       content: 'This is a new review',
       hoursOfGameplay: 100,
       isCompleted: true,
