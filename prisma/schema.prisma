@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Reviewer {
+  id              String    @id @default(uuid())
+  email           String    @unique
+  password        String
+  nickname        String    @unique
+  profileImageUrl String?   @map("profile_image_url")
+  birthDay        DateTime  @map("birth_day")
+  subtitle        String
+  playing         Game[]
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime? @updatedAt @map("updated_at")
+
+  reviews Review[]
+
+  @@map("reviewers")
+}
+
+model Review {
+  id              String    @id @default(uuid())
+  title           String
+  hoursOfGameplay String    @map("hours_of_gameplay")
+  isCompleted     Boolean   @map("is_completed")
+  content         String
+  slug            String    @unique
+  rate            Int
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime? @updatedAt @map("updated_at")
+  reviewerId      String?   @map("reviewer_id")
+  gameId          String    @map("game_id")
+
+  reviewer       Reviewer?       @relation(fields: [reviewerId], references: [id])
+  game           Game            @relation(fields: [gameId], references: [id])
+  reviewComments ReviewComment[]
+
+  @@map("reviews")
+}
+
+model ReviewComment {
+  id        String    @id @default(uuid())
+  content   String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  reviewId  String?   @map("review_id")
+
+  review Review? @relation(fields: [reviewId], references: [id])
+
+  @@map("review_comments")
+}
+
+model Game {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  description String
+  releaseDate DateTime @map("release_date")
+  publisher   String
+  studio      String
+  bannerUrl   String   @map("banner_url")
+  reviewerId  String?  @map("reviewer_id")
+
+  review   Review[]
+  reviewer Reviewer? @relation(fields: [reviewerId], references: [id])
+
+  @@map("games")
+}

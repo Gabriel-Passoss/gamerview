@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  dev-postgres:
+    container_name: dev-postres-gamerview
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: gamerview
