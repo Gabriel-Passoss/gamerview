@@ -25,8 +25,12 @@ export class InMemoryReviewsRepository implements ReviewsRepository {
     return review
   }
 
-  async findManyByRecent({ page }: PaginationParams): Promise<Review[]> {
+  async findManyByRecent(
+    reviewerId: string,
+    { page }: PaginationParams,
+  ): Promise<Review[]> {
     const reviews = this.items
+      .filter((item) => item.reviewerId.toString() === reviewerId)
       .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
       .slice((page - 1) * 20, page * 20)
 
