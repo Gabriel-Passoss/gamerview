@@ -12,16 +12,17 @@ datasource db {
 
 model Reviewer {
   id              String    @id @default(uuid())
+  name            String
   email           String    @unique
   password        String
   nickname        String    @unique
   profileImageUrl String?   @map("profile_image_url")
   birthDay        DateTime  @map("birth_day")
   subtitle        String
-  playing         Game[]
   createdAt       DateTime  @default(now()) @map("created_at")
   updatedAt       DateTime? @updatedAt @map("updated_at")
 
+  playing       Game[]
   reviews       Review[]
   ReviewComment ReviewComment[]
 
@@ -74,7 +75,7 @@ model Game {
   reviewerId  String?  @map("reviewer_id")
 
   review   Review[]
-  reviewer Reviewer? @relation(fields: [reviewerId], references: [id])
+  Reviewer Reviewer? @relation(fields: [reviewerId], references: [id])
 
   @@map("games")
 }
