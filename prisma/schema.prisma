@@ -22,7 +22,8 @@ model Reviewer {
   createdAt       DateTime  @default(now()) @map("created_at")
   updatedAt       DateTime? @updatedAt @map("updated_at")
 
-  reviews Review[]
+  reviews       Review[]
+  ReviewComment ReviewComment[]
 
   @@map("reviewers")
 }
@@ -52,9 +53,11 @@ model ReviewComment {
   content   String
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
-  reviewId  String?   @map("review_id")
+  reviewId  String    @map("review_id")
+  authorId  String    @map("author_id")
 
-  review Review? @relation(fields: [reviewId], references: [id])
+  review Review?  @relation(fields: [reviewId], references: [id])
+  author Reviewer @relation(fields: [authorId], references: [id])
 
   @@map("review_comments")
 }
