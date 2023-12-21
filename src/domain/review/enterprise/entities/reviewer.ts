@@ -1,6 +1,5 @@
 import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { Game } from './game'
 import { Optional } from '@/core/types/optional'
 
 export interface ReviewerProps {
@@ -11,7 +10,6 @@ export interface ReviewerProps {
   profileImageUrl: string
   birthday: Date
   subtitle: string
-  playing: Game[]
   createdAt: Date
   updatedAt?: Date | null
 }
@@ -80,15 +78,6 @@ export class Reviewer extends Entity<ReviewerProps> {
     this.touch()
   }
 
-  get playing() {
-    return this.props.playing
-  }
-
-  set playing(games: Game[]) {
-    this.props.playing = games
-    this.touch()
-  }
-
   get updatedAt() {
     return this.props.updatedAt
   }
@@ -104,7 +93,7 @@ export class Reviewer extends Entity<ReviewerProps> {
   static create(
     props: Optional<
       ReviewerProps,
-      'profileImageUrl' | 'subtitle' | 'playing' | 'createdAt' | 'updatedAt'
+      'profileImageUrl' | 'subtitle' | 'createdAt' | 'updatedAt'
     >,
     id?: UniqueEntityID,
   ) {
@@ -113,7 +102,6 @@ export class Reviewer extends Entity<ReviewerProps> {
         ...props,
         profileImageUrl: props.profileImageUrl ?? '',
         subtitle: props.subtitle ?? '',
-        playing: props.playing ?? [],
         createdAt: props.createdAt ?? new Date(),
       },
       id,
