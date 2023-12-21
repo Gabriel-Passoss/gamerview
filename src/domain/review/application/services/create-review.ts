@@ -3,12 +3,11 @@ import { Injectable } from '@nestjs/common'
 import { Review } from '../../enterprise/entities/review'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { ReviewsRepository } from '../repositories/reviews-repository'
-import { Game } from '../../enterprise/entities/game'
 
 interface CreateReviewServiceRequest {
   reviewerId: string
   title: string
-  game: Game
+  gameId: string
   hoursOfGameplay: number
   isCompleted: boolean
   content: string
@@ -29,7 +28,7 @@ export class CreateReviewService {
   async execute({
     reviewerId,
     title,
-    game,
+    gameId,
     hoursOfGameplay,
     isCompleted,
     content,
@@ -38,7 +37,7 @@ export class CreateReviewService {
     const review = Review.create({
       reviewerId: new UniqueEntityID(reviewerId),
       title,
-      game,
+      gameId: new UniqueEntityID(gameId),
       hoursOfGameplay,
       isCompleted,
       content,
