@@ -31,14 +31,14 @@ model Reviewer {
 model Review {
   id              String    @id @default(uuid())
   title           String
-  hoursOfGameplay String    @map("hours_of_gameplay")
+  hoursOfGameplay Int       @map("hours_of_gameplay")
   isCompleted     Boolean   @map("is_completed")
   content         String
   slug            String    @unique
   rate            Int
   createdAt       DateTime  @default(now()) @map("created_at")
   updatedAt       DateTime? @updatedAt @map("updated_at")
-  reviewerId      String?   @map("reviewer_id")
+  reviewerId      String    @map("reviewer_id")
   gameId          String    @map("game_id")
 
   reviewer       Reviewer?       @relation(fields: [reviewerId], references: [id])
