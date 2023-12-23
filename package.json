@@ -20,7 +20,7 @@
     "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
     "prepare": "husky install",
     "lint-staged": "lint-staged",
-    "pre-push": "npm run test"
+    "pre-push": "npm run test && npm run test:e2e"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
