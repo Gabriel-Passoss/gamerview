@@ -14,7 +14,6 @@ interface EditReviewerServiceRequest {
   password?: string
   oldPassword?: string
   nickname?: string
-  profileImageUrl?: string
   subtitle?: string
 }
 
@@ -40,7 +39,6 @@ export class EditReviewerService {
     password,
     email,
     nickname,
-    profileImageUrl,
     subtitle,
   }: EditReviewerServiceRequest): Promise<EditReviewerServiceResponse> {
     const reviewer = await this.reviewersRepository.findById(reviewerId)
@@ -67,7 +65,6 @@ export class EditReviewerService {
 
     reviewer.email = email ?? reviewer.email
     reviewer.nickname = nickname ?? reviewer.nickname
-    reviewer.profileImageUrl = profileImageUrl ?? reviewer.profileImageUrl
     reviewer.subtitle = subtitle ?? reviewer.subtitle
 
     await this.reviewersRepository.save(reviewer)
