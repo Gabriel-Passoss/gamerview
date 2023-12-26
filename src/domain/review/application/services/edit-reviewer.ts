@@ -18,7 +18,7 @@ interface EditReviewerServiceRequest {
 }
 
 type EditReviewerServiceResponse = Either<
-  ResourceNotFoundError,
+  ResourceNotFoundError | WrongCredentialsError,
   {
     reviewer: Reviewer
   }
