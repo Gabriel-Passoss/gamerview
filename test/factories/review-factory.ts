@@ -12,7 +12,7 @@ export function makeReview(
     {
       reviewerId: new UniqueEntityID(),
       title: faker.lorem.sentence(),
-      game: makeGame(),
+      gameId: makeGame().id,
       content: faker.lorem.text(),
       hoursOfGameplay: Math.floor(Math.random() * (200 - 50 + 1)) + 50,
       isCompleted: true,
