@@ -13,6 +13,8 @@ import { GetReviewerController } from './controllers/get-reviewer.controller'
 import { GetReviewerByIdService } from '@/domain/review/application/services/get-reviewer-by-id'
 import { CreateReviewController } from './controllers/create-review.controller'
 import { CreateReviewService } from '@/domain/review/application/services/create-review'
+import { EditReviewController } from './controllers/edit-review.controller'
+import { EditReviewService } from '@/domain/review/application/services/edit-review'
 
 @Module({
   imports: [DatabaseModule, CryptoModule],
@@ -23,6 +25,7 @@ import { CreateReviewService } from '@/domain/review/application/services/create
     DeleteReviewerController,
     GetReviewerController,
     CreateReviewController,
+    EditReviewController,
   ],
   providers: [
     AuthenticateReviewerService,
@@ -31,6 +34,7 @@ import { CreateReviewService } from '@/domain/review/application/services/create
     DeleteReviewerService,
     GetReviewerByIdService,
     CreateReviewService,
+    EditReviewService,
   ],
 })
 export class HttpModule {}
