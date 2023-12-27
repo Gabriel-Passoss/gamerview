@@ -3,9 +3,11 @@ import { Injectable } from '@nestjs/common'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 import { ReviewsRepository } from '../repositories/reviews-repository'
 import { Review } from '../../enterprise/entities/review'
+import { UnauthorizedOperation } from './errors/unauthorized-operation'
 
 interface EditReviewServiceRequest {
   reviewId: string
+  reviewerId: string
   title?: string
   hoursOfGameplay?: number
   isCompleted?: boolean
@@ -14,7 +16,7 @@ interface EditReviewServiceRequest {
 }
 
 type EditReviewServiceResponse = Either<
-  ResourceNotFoundError,
+  ResourceNotFoundError | UnauthorizedOperation,
   {
     review: Review
   }
@@ -26,6 +28,7 @@ export class EditReviewService {
 
   async execute({
     reviewId,
+    reviewerId,
     title,
     hoursOfGameplay,
     isCompleted,
@@ -36,6 +39,10 @@ export class EditReviewService {
 
     if (!review) {
       return left(new ResourceNotFoundError())
+    }
+
+    if (reviewerId !== review.reviewerId.toString()) {
+      return left(new UnauthorizedOperation())
     }
 
     review.title = title ?? review.title
