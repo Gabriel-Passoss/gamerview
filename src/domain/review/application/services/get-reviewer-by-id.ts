@@ -5,7 +5,7 @@ import { Reviewer } from '../../enterprise/entities/reviewer'
 import { ReviewersRepository } from '../repositories/reviewers-respository'
 
 interface GetReviewerByIdServiceRequest {
-  id: string
+  reviewerId: string
 }
 
 type GetReviewerByIdServiceResponse = Either<
@@ -20,9 +20,9 @@ export class GetReviewerByIdService {
   constructor(private readonly reviewersRepository: ReviewersRepository) {}
 
   async execute({
-    id,
+    reviewerId,
   }: GetReviewerByIdServiceRequest): Promise<GetReviewerByIdServiceResponse> {
-    const reviewer = await this.reviewersRepository.findById(id)
+    const reviewer = await this.reviewersRepository.findById(reviewerId)
 
     if (!reviewer) {
       return left(new ResourceNotFoundError())

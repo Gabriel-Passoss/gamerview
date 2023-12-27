@@ -19,7 +19,7 @@ describe('Get a reviewer by id', () => {
     await inMemoryReviewersRepository.create(reviewer)
 
     const result = await sut.execute({
-      id: 'reviewer-1',
+      reviewerId: 'reviewer-1',
     })
 
     expect(result.isRight()).toBe(true)
