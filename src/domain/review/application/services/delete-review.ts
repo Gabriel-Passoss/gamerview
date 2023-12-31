@@ -8,7 +8,10 @@ interface DeleteReviewServiceRequest {
   reviewerId: string
 }
 
-type DeleteReviewServiceResponse = Either<ResourceNotFoundError, null>
+type DeleteReviewServiceResponse = Either<
+  ResourceNotFoundError | UnauthorizedException,
+  null
+>
 
 @Injectable()
 export class DeleteReviewService {
